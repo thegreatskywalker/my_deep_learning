@@ -1,0 +1,107 @@
+
+#Install pydot. (First install graphviz on windows)
+pip install pydotplus
+
+
+# Update pip
+python -m pip install --upgrade pip
+
+#export conda enviornment
+conda env export > linux_tensorflow_gpu.yml
+
+
+# Create conda enviornment from yaml backup
+conda env create -f tensorflow_gpu_environment.yml
+
+#Remove an enviornment
+conda remove --name myenv --all
+
+
+Push Git changes
+git push origin master
+
+
+
+Install Anaconda
+
+mkdir downloads
+cd /downloads
+curl -O https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh
+
+#verify checksum
+sha256sum Anaconda3-5.0.1-Linux-x86_64.sh
+
+#install anaconda
+bash Anaconda3-5.0.1-Linux-x86_64.sh
+
+#activate pythonpath from bashrc
+source ~/.bashrc
+
+#verify
+conda list
+
+
+
+
+#Install pydot. (First install graphviz on windows)
+pip install pydotplus
+
+
+# Update pip
+python -m pip install --upgrade pip
+
+
+# Create conda enviornment from yaml backup
+conda env create -f tensorflow_gpu_environment.yml
+
+#Remove an enviornment
+conda remove --name myenv --all
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
