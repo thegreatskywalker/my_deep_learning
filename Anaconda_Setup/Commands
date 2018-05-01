@@ -1,0 +1,15 @@
+
+#Install pydot. (First install graphviz on windows)
+pip install pydotplus
+
+
+# Update pip
+python -m pip install --upgrade pip
+
+
+# Create conda enviornment from yaml backup
+conda env create -f tensorflow_gpu_environment.yml
+
+#Remove an enviornment
+conda remove --name myenv --all
+
