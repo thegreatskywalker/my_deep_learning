@@ -2,8 +2,7 @@ name: tensorflow
 channels:
   - defaults
 dependencies:
-  - certifi=2018.1.18=py35_0
-  - freetype=2.8=h51f8f2c_1
+  - certifi=2018.1.18=py35_0  
   - graphviz=2.38.0=4
   - h5py=2.7.1=py35hb2c3add_0
   - hdf5=1.10.1=h98b8871_1
