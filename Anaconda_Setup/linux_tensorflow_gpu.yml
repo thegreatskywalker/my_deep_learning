@@ -280,5 +280,5 @@ dependencies:
   - ruamel-yaml==0.15.35
   - tables==3.4.2
   - tensorflow==1.7.0
-prefix: /home/pt/anaconda3/envs/tensorflow_gpu
+prefix: ~/anaconda3/envs/tensorflow_gpu
 
