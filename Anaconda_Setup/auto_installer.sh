@@ -47,5 +47,6 @@ echo "\"jupyter notebook\" will start Jupyter on port 8888"
 echo "If you get an error instead, try restarting your session so your $PATH is updated"
 
 # setup Anaconda enviornment
+echo "Setting up Anaconda enviornment for Algorithmica"
 wget https://github.com/thegreatskywalker/my_deep_learning/blob/master/Anaconda_Setup/linux_tensorflow_gpu.yml
 conda env create -f linux_tensorflow_gpu.yml
