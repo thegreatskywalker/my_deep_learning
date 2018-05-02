@@ -29,7 +29,7 @@ gcloud auth list
 gcloud compute ssh deep-learning
 
 #Auto script by Pranav
-curl https://github.com/thegreatskywalker/my_deep_learning/blob/master/Anaconda_Setup/auto_installer.sh | bash
+wget -O - https://raw.githubusercontent.com/thegreatskywalker/my_deep_learning/master/Anaconda_Setup/auto_installer.sh | bash
 
 #sudo sh install-gpu.sh
 

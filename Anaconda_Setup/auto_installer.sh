@@ -15,6 +15,13 @@ sudo apt-get -y install cuda
 sudo modprobe nvidia
 nvidia-smi
 
+# install cudnn libraries
+wget "http://files.fast.ai/files/cudnn.tgz" -O "cudnn.tgz"
+tar -zxf cudnn.tgz
+cd cuda
+sudo cp lib64/* /usr/local/cuda/lib64/
+sudo cp include/* /usr/local/cuda/include/
+
 # install Anaconda for current user
 mkdir downloads
 cd downloads
@@ -25,13 +32,12 @@ echo "export PATH=\"$HOME/anaconda3/bin:\$PATH\"" >> ~/.bashrc
 export PATH="$HOME/anaconda3/bin:$PATH"
 conda install -y bcolz
 conda upgrade -y --all
+source ~/.bashrc
 
-# install cudnn libraries
-wget "http://files.fast.ai/files/cudnn.tgz" -O "cudnn.tgz"
-tar -zxf cudnn.tgz
-cd cuda
-sudo cp lib64/* /usr/local/cuda/lib64/
-sudo cp include/* /usr/local/cuda/include/
+# setup Anaconda enviornment
+echo "Setting up Anaconda enviornment for Algorithmica"
+wget https://github.com/thegreatskywalker/my_deep_learning/blob/master/Anaconda_Setup/linux_tensorflow_gpu.yml
+conda env create -f linux_tensorflow_gpu.yml
 
 # configure jupyter and prompt for password
 jupyter notebook --generate-config
@@ -45,8 +51,3 @@ cd ~
 git clone https://github.com/algorithmica-repository/deep-learning
 echo "\"jupyter notebook\" will start Jupyter on port 8888"
 echo "If you get an error instead, try restarting your session so your $PATH is updated"
-
-# setup Anaconda enviornment
-echo "Setting up Anaconda enviornment for Algorithmica"
-wget https://github.com/thegreatskywalker/my_deep_learning/blob/master/Anaconda_Setup/linux_tensorflow_gpu.yml
-conda env create -f linux_tensorflow_gpu.yml
