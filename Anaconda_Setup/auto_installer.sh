@@ -32,7 +32,7 @@ bash "Anaconda3-5.0.1-Linux-x86_64.sh" -b
 source ~/.bashrc
 
 #echo "export PATH=\"$HOME/anaconda3/bin:\$PATH\"" >> ~/.bashrc
-#export PATH="$HOME/anaconda3/bin:$PATH"
+export PATH="$HOME/anaconda3/bin:$PATH"
 conda install -y bcolz
 conda upgrade -y --all
 source ~/.bashrc

@@ -1,8 +1,0 @@
-# Create conda enviornment from yaml backup
-conda env create -f tensorflow_gpu_environment.yml
-
-activate tensorflow_gpu
-
-#Remove an enviornment
-conda remove --name myenv --all
-
