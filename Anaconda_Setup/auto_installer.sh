@@ -42,15 +42,15 @@ echo "Setting up Anaconda enviornment for Algorithmica"
 wget https://raw.githubusercontent.com/thegreatskywalker/my_deep_learning/master/Anaconda_Setup/linux_tensorflow_gpu.yml
 conda env create -f linux_tensorflow_gpu.yml
 
+# clone the Algoritmica course repo and prompt to start notebook
+cd ~
+git clone https://github.com/algorithmica-repository/deep-learning
+echo "\"jupyter notebook\" will start Jupyter on port 8888"
+echo "If you get an error instead, try restarting your session so your $PATH is updated"
+
 # configure jupyter and prompt for password
 jupyter notebook --generate-config
 jupass=`python -c "from notebook.auth import passwd; print(passwd())"`
 echo "c.NotebookApp.password = u'"$jupass"'" >> $HOME/.jupyter/jupyter_notebook_config.py
 echo "c.NotebookApp.ip = '*'
 c.NotebookApp.open_browser = False" >> $HOME/.jupyter/jupyter_notebook_config.py
-
-# clone the Algoritmica course repo and prompt to start notebook
-cd ~
-git clone https://github.com/algorithmica-repository/deep-learning
-echo "\"jupyter notebook\" will start Jupyter on port 8888"
-echo "If you get an error instead, try restarting your session so your $PATH is updated"
