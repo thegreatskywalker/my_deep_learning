@@ -11,7 +11,6 @@ import zipfile
 import wget
 import time
 import shutil
-import curses
 
 
 self_all_gids = []
@@ -123,20 +122,9 @@ class AutoDownloader(object):
                     temp = temp[0]
                     url = temp['uri']
                     
-#                    print('Url: ' + url)        
-#                    print('Completed: ' + str(percentage_completed) + '%' + '     Speed: '+ str(speed) + ' MBps' + '     Total Connections: ' + status['connections'])
-#                    print('\n')  
-                    
-                    #for f in range(10):
-                    #delete "\r" to append instead of overwrite
-                    sys.stdout.write("\r" + str(f))
-                    sys.stdout.flush()
-                    time.sleep(10)
-                    
-                    print("\r" + 'Url: ' + url)        
-                    print("\r" + 'Completed: ' + str(percentage_completed) + '%' + '     Speed: '+ str(speed) + ' MBps' + '     Total Connections: ' + status['connections'])
-                    print('"\r" \n') 
-            sys.stdout.flush()
+                    print('Url: ' + url)        
+                    print('Completed: ' + str(percentage_completed) + '%' + '     Speed: '+ str(speed) + ' MBps' + '     Total Connections: ' + status['connections'])
+                    print('\n')                  
             time.sleep(2)               
         downloader.shutdown() 
  
