@@ -12,46 +12,42 @@ import wget
 import time
 
 
+
 self_all_gids = []
 
 
 class AutoDownloader(object):
     
-    def __init__(self, project_dir, data_to_download):     
+    def __init__(self, project_dir, data_to_download, common_utils_dir = 'automatic' ):     
         os.chdir(project_dir)
-           
-        download_common_utils(project_dir)
-        from PyAria2 import PyAria2 ###############################################################???
-        import utils ###############################################################???
+        print('Confirm Project Directory: ' + project_dir)
+        
+        if common_utils_dir == 'automatic':
+            common_utils_dir = project_dir + '/COMMON_UTILS'
+            
+        self.download_common_utils(common_utils_dir)        
+        from pyaria2 import PyAria2 ###############################################################???
            
         downloader = PyAria2()   
-        __add_files_to_aria(downloader, project_dir, data_to_download)                
-        printDownloadStatus(downloader)
+        __add_files_to_aria(downloader, project_dir, data_to_download, common_utils_dir)                
+        self.printDownloadStatus(downloader)
 
         print('\n Unzipping') 
-        unzip_all(project_dir, data_to_download)
+        self.unzip_all(project_dir, data_to_download)
         
         print('\n ############## Downloading Complete ##############')
 
        
     
-    def download_common_utils(project_dir):
-        os.chdir(project_dir)
-        print('Confirm the current working directory: ')
-        print(project_dir)
-        
-        common_utils_dir = project_dir + '/COMMON_UTILS'
-        
-        if not os.path.isdir(common_utils_dir):    
-            os.mkdir(common_utils_dir)
-            os.chdir(common_utils_dir)
-        
-            aria_url = 'https://raw.githubusercontent.com/zhenlohuang/pyaria2/master/pyaria2.py'
-            utils_url = 'https://raw.githubusercontent.com/algorithmica-repository/deep-learning/master/2018-feb/common_utils/utils.py'
-            wget.download(aria_url , out = 'PyAria2.py')
-            wget.download(utils_url , out = 'utils.py')
-        else:
-            print('/COMMON_UTILS already exists')
+    def download_common_utils(common_utils_dir):
+        if os.path.isdir(common_utils_dir):
+            os.removedirs(common_utils_dir)
+           
+        os.mkdir(common_utils_dir)
+    
+        aria_url = 'https://raw.githubusercontent.com/zhenlohuang/pyaria2/master/pyaria2.py'
+        wget.download(aria_url , common_utils_dir)
+
         sys.path.insert(0, common_utils_dir)   
         
         
@@ -128,16 +124,18 @@ class AutoDownloader(object):
  
 
 
-def __add_files_to_aria(downloader, project_dir, data_to_download):    
+def __add_files_to_aria(downloader, project_dir, data_to_download, common_utils_dir):    
     for directory, url_links in data_to_download.items():
         full_path_directory = project_dir + directory
-        if os.path.isdir(full_path_directory):
+        
+        if os.path.isdir(full_path_directory) and (full_path_directory != common_utils_dir):
             print('Data previously downloaded at: ' + full_path_directory)
-        else:         
-            print('>>>Creating directory: '+ full_path_directory )
-            print(type(url_links))
-            os.makedirs(full_path_directory)
-            
+        else:
+            if(full_path_directory != common_utils_dir):
+                print('>>>Creating directory: '+ full_path_directory )
+                print(type(url_links))
+                os.makedirs(full_path_directory)
+                
             for url in url_links:
                 __download_url(downloader,full_path_directory, url) 
 
