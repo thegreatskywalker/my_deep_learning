@@ -39,7 +39,7 @@ class AutoDownloader(object):
 
        
     
-    def download_common_utils(common_utils_dir):
+    def download_common_utils(self, common_utils_dir):
         if os.path.isdir(common_utils_dir):
             os.removedirs(common_utils_dir)
            
@@ -54,7 +54,7 @@ class AutoDownloader(object):
         
         
         ###############################################################
-    def __download_url(downloader,directory, url):    
+    def __download_url(self, downloader,directory, url):    
         os.chdir(directory)
         global_download_options = downloader.getGlobalOption()
         global_download_options['max-connection-per-server'] = '16'
@@ -65,14 +65,14 @@ class AutoDownloader(object):
 
 
    
-    def unzip_all(project_dir, data_to_download):
+    def unzip_all(self, project_dir, data_to_download):
         for directory, url_links in data_to_download.items():        
             full_path_directory = project_dir + directory
-            unzip_individual_directory(full_path_directory)
+            self.unzip_individual_directory(full_path_directory)
     
     
     
-    def unzip_individual_directory(full_path_directory):    
+    def unzip_individual_directory(self, full_path_directory):    
         print('Unzipping items in '+ full_path_directory)
         extension = ".zip"
     
@@ -90,7 +90,7 @@ class AutoDownloader(object):
 
 
     ################################################
-    def printDownloadStatus(downloader):
+    def printDownloadStatus(self, downloader):
         
         while downloader.tellActive():    
             print('>>>>>>>>>>>>>>>>>')
@@ -124,7 +124,7 @@ class AutoDownloader(object):
  
 
 
-def __add_files_to_aria(downloader, project_dir, data_to_download, common_utils_dir):    
+def __add_files_to_aria(self, downloader, project_dir, data_to_download, common_utils_dir):    
     for directory, url_links in data_to_download.items():
         full_path_directory = project_dir + directory
         
@@ -137,7 +137,7 @@ def __add_files_to_aria(downloader, project_dir, data_to_download, common_utils_
                 os.makedirs(full_path_directory)
                 
             for url in url_links:
-                __download_url(downloader,full_path_directory, url) 
+                self.__download_url(downloader,full_path_directory, url) 
 
 
 
