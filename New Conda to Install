@@ -1,0 +1,5 @@
+ #conda install -c anaconda wget 
+ conda install -c bioconda python-wget 
+
+ conda install -c bioconda aria2 
+
