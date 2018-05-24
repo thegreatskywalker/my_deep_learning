@@ -2,4 +2,4 @@
  conda install -c bioconda python-wget 
 
  conda install -c bioconda aria2 
-
+conda install -c conda-forge tqdm
