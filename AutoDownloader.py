@@ -20,7 +20,7 @@ class AutoDownloader(object):
     def __init__(self, project_dir, data_to_download):     
         os.chdir(project_dir)
            
-        #download_common_utils(project_dir)
+        download_common_utils(project_dir)
         from PyAria2 import PyAria2 ###############################################################???
         import utils ###############################################################???
            
@@ -35,24 +35,24 @@ class AutoDownloader(object):
 
        
     
-#    def download_common_utils(project_dir):
-#        os.chdir(project_dir)
-#        print('Confirm the current working directory: ')
-#        print(project_dir)
-#        
-#        common_utils_dir = project_dir + '/COMMON_UTILS'
-#        
-#        if not os.path.isdir(common_utils_dir):    
-#            os.mkdir(common_utils_dir)
-#            os.chdir(common_utils_dir)
-#        
-#            aria_url = 'https://raw.githubusercontent.com/zhenlohuang/pyaria2/master/pyaria2.py'
-#            utils_url = 'https://raw.githubusercontent.com/algorithmica-repository/deep-learning/master/2018-feb/common_utils/utils.py'
-#            wget.download(aria_url , out = 'PyAria2.py')
-#            wget.download(utils_url , out = 'utils.py')
-#        else:
-#            print('/COMMON_UTILS already exists')
-#        sys.path.insert(0, common_utils_dir)   
+    def download_common_utils(project_dir):
+        os.chdir(project_dir)
+        print('Confirm the current working directory: ')
+        print(project_dir)
+        
+        common_utils_dir = project_dir + '/COMMON_UTILS'
+        
+        if not os.path.isdir(common_utils_dir):    
+            os.mkdir(common_utils_dir)
+            os.chdir(common_utils_dir)
+        
+            aria_url = 'https://raw.githubusercontent.com/zhenlohuang/pyaria2/master/pyaria2.py'
+            utils_url = 'https://raw.githubusercontent.com/algorithmica-repository/deep-learning/master/2018-feb/common_utils/utils.py'
+            wget.download(aria_url , out = 'PyAria2.py')
+            wget.download(utils_url , out = 'utils.py')
+        else:
+            print('/COMMON_UTILS already exists')
+        sys.path.insert(0, common_utils_dir)   
         
         
         
