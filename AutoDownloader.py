@@ -11,7 +11,6 @@ import zipfile
 import wget
 import time
 import shutil
-import curses
 
 
 self_all_gids = []
@@ -23,24 +22,19 @@ class AutoDownloader(object):
         os.chdir(project_dir)
         print('>>>>>Confirm Project Directory: ' + project_dir)
         
-        print('common_utils_dir: '+ common_utils_dir)
-        print(type(common_utils_dir))    
-
         if common_utils_dir == 'automatic':
             common_utils_dir = project_dir + '/COMMON_UTILS'
-        print('new common_utils_dir: '+ common_utils_dir)
-        print(type(common_utils_dir))    
+    
         self.download_common_utils(common_utils_dir)        
         from pyaria2 import PyAria2 ###############################################################???
            
         downloader = PyAria2()  
-        #def add_files_to_aria(self, downloader, project_dir, data_to_download, common_utils_dir):    
 
         self.__add_files_to_aria(downloader, project_dir, data_to_download, common_utils_dir)                
         self.printDownloadStatus(downloader)
-#
-#        print('\n Unzipping') 
-#        self.unzip_all(project_dir, data_to_download)
+
+        print('\n Unzipping') 
+        self.unzip_all(project_dir, data_to_download)
         
         print('\n ############## Downloading Complete ##############')
 
@@ -56,7 +50,7 @@ class AutoDownloader(object):
         wget.download(aria_url , common_utils_dir)
 
         sys.path.insert(0, common_utils_dir)   
-#        
+     
         
         
         
@@ -66,7 +60,6 @@ class AutoDownloader(object):
         global_download_options = downloader.getGlobalOption()
         global_download_options['max-connection-per-server'] = '16'
         downloader.changeGlobalOption(global_download_options)
-        print(type(url))
         gid=downloader.addUri([url], {'dir':directory})
         self_all_gids.append(gid)
 
@@ -99,45 +92,49 @@ class AutoDownloader(object):
     ################################################
     def printDownloadStatus(self, downloader):
         
+        #Print list of all files to be downloaded
+        print('\n\n>>>Downloads Started')
+        
+        for item in self_all_gids:        
+            status = downloader.tellStatus(item)
+            temp = status['files'][0]
+            temp = temp['uris']
+            temp = temp[0]
+            url = temp['uri']    
+            print('['+ str(self_all_gids.index(item)) + ']' + url)
+        print('\n')
         while downloader.tellActive():    
-            print('>>>>>>>>>>>>>>>>>')
+            message = ' '
+            total_speed = 0
             for item in self_all_gids:        
                 status = downloader.tellStatus(item)
                 
-                if status['status'] == 'active':              
-                    completedLength = float(status['completedLength'])
-                    totalLength = float(status['totalLength'])
-                    
-                    if not totalLength == 0:                
-                        percentage_completed = (completedLength / totalLength) * 100
-                        percentage_completed = round(percentage_completed, 2) 
-                    else:
-                        print('Waiting for file size')
-                        percentage_completed = completedLength
-                                    
-                    speed = int(status['downloadSpeed']) /(1024*1024) 
-                    speed = round(speed, 2)
-              
-                    temp = status['files'][0]
-                    temp = temp['uris']
-                    temp = temp[0]
-                    url = temp['uri']
-                    
-#                    print('Url: ' + url)        
-#                    print('Completed: ' + str(percentage_completed) + '%' + '     Speed: '+ str(speed) + ' MBps' + '     Total Connections: ' + status['connections'])
-#                    print('\n')  
-                    
-                    #for f in range(10):
-                    #delete "\r" to append instead of overwrite
-                    sys.stdout.write("\r" + str(f))
-                    sys.stdout.flush()
-                    time.sleep(10)
-                    
-                    print("\r" + 'Url: ' + url)        
-                    print("\r" + 'Completed: ' + str(percentage_completed) + '%' + '     Speed: '+ str(speed) + ' MBps' + '     Total Connections: ' + status['connections'])
-                    print('"\r" \n') 
-            sys.stdout.flush()
-            time.sleep(2)               
+                
+                #if status['status'] == 'active':              
+                completedLength = float(status['completedLength'])
+                totalLength = float(status['totalLength'])
+                
+                if not totalLength == 0:                
+                    percentage_completed = (completedLength / totalLength) * 100
+                    percentage_completed = int(percentage_completed)
+                    #percentage_completed = round(percentage_completed, 0) 
+                else:
+                    message = '?'
+                    percentage_completed = completedLength
+                    percentage_completed = int(percentage_completed)
+
+                    #percentage_completed = completedLength
+                                
+                speed = int(status['downloadSpeed']) /(1024*1024) 
+                speed = round(speed, 2)              
+                total_speed+= speed
+                message+= '['+ str(self_all_gids.index(item)) + ']'+ str(percentage_completed) + '% '
+                 
+            message += '  Speed: ' + str(total_speed) + 'MBps  ' 
+            sys.stdout.write('\r'+ message)
+            time.sleep(.3)  
+            sys.stdout.flush() 
+        print('\n\n')
         downloader.shutdown() 
  
 
@@ -151,8 +148,7 @@ class AutoDownloader(object):
                 print('Data previously downloaded at: ' + full_path_directory)
             else:
                 if(full_path_directory != common_utils_dir):
-                    print('>>>Creating directory: '+ full_path_directory )
-                    print(type(url_links))
+                    print('>>>Creating directory: '+ full_path_directory )                    
                     os.makedirs(full_path_directory)
                     
                 for url in url_links:

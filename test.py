@@ -8,10 +8,10 @@ Created on Thu May 24 23:06:32 2018
 
 import wget,sys,os
 
-#    dir_name = os.getcwd()
 project_dir = ('/home/pt/deep-learning/2018-feb/18.semantic similarity')
 common_utils_dir = project_dir + '/COMMON_UTILS'
 
+os.chdir(project_dir)
 
 #data_to_download =  {    
 #    
@@ -60,6 +60,6 @@ data_to_download =  {
 sys.path.insert(0, project_dir) 
 
 
-from AutoDownloader_v2 import AutoDownloader
+from AutoDownloader import AutoDownloader
 AutoDownloader(project_dir, data_to_download)
 
