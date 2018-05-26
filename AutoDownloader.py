@@ -33,7 +33,7 @@ class AutoDownloader(object):
         self.__add_files_to_aria(downloader, project_dir, data_to_download, common_utils_dir)                
         self.printDownloadStatus(downloader)
 
-        print('\n Unzipping') 
+        print('\n>>>Unzipping') 
         self.unzip_all(project_dir, data_to_download)
         
         print('\n ############## Downloading Complete ##############')
@@ -73,15 +73,14 @@ class AutoDownloader(object):
     
     
     def unzip_individual_directory(self, full_path_directory):    
-        print('Unzipping items in '+ full_path_directory)
+        print('\nUnzipping items in '+ full_path_directory)
         extension = ".zip"
     
-        for item in os.listdir(full_path_directory):
-            print('file is: ' + item)
+        for item in os.listdir(full_path_directory):            
             if item.endswith(extension): # check for ".zip" extension
                 file_name = full_path_directory + '/' + item # get full path of files
                 
-                print('File to unzip: '+file_name)
+                print('Unzipping: '+file_name)
                 zip_ref = zipfile.ZipFile(file_name) # create zipfile object
                 zip_ref.extractall(full_path_directory) # extract file to dir
                 zip_ref.close() # close file
@@ -93,7 +92,7 @@ class AutoDownloader(object):
     def printDownloadStatus(self, downloader):
         
         #Print list of all files to be downloaded
-        print('\n\n>>>Downloads Started')
+        print('\n\n>>>Downloads Started\n')
         
         for item in self_all_gids:        
             status = downloader.tellStatus(item)
@@ -104,7 +103,7 @@ class AutoDownloader(object):
             print('['+ str(self_all_gids.index(item)) + ']' + url)
         print('\n')
         while downloader.tellActive():    
-            message = ' '
+            message = ''
             total_speed = 0
             for item in self_all_gids:        
                 status = downloader.tellStatus(item)
@@ -139,8 +138,7 @@ class AutoDownloader(object):
  
 
 
-    def __add_files_to_aria(self, downloader, project_dir, data_to_download, common_utils_dir):    
-        print('working')
+    def __add_files_to_aria(self, downloader, project_dir, data_to_download, common_utils_dir):         
         for directory, url_links in data_to_download.items():
             full_path_directory = project_dir + directory
             
