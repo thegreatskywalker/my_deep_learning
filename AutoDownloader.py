@@ -22,11 +22,11 @@ last_download_percentages = ''
 
 class AutoDownloader(object):
     
-    def __init__(self, project_dir, data_to_download, common_utils_dir = 'automatic' ):     
+    def __init__(self, project_dir, data_to_download, common_utils_dir = 'default' ):     
         os.chdir(project_dir)
         print('>>>>>Confirm Project Directory: ' + project_dir)
         
-        if common_utils_dir == 'automatic':
+        if common_utils_dir == 'default':
             common_utils_dir = project_dir + '/COMMON_UTILS'
     
         self.download_common_utils(common_utils_dir)        
@@ -41,9 +41,8 @@ class AutoDownloader(object):
         print('\n>>>Unzipping') 
         self.unzip_all(project_dir, data_to_download)
         
-        print('\n ############## Downloading Complete ############## \n\n')
         
-        print('\n ############## Directory Tree ############## \n\n')
+        print('\n >>> Directory Tree \n\n')
         self.showFolderTree(project_dir, True, 2, False )
 
 
