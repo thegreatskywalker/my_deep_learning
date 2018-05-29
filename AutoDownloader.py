@@ -16,7 +16,8 @@ import requests
 
 
 self_all_gids = []
-last_speed = 0 
+last_download_speed = 0 
+last_download_percentages = ''
 
 
 class AutoDownloader(object):
@@ -118,12 +119,12 @@ class AutoDownloader(object):
             self.__print_status(downloader)
         
         self.__print_status(downloader, False) #Because previous loop will show 98% complete and then terminate at 100%. 
-        message = '  Speed: ' + str(last_speed) + 'MBps  ' 
-        sys.stdout.write('\r'+ message)
-        time.sleep(.3)  
-        sys.stdout.flush()
+        message = '  Speed: ' + str(self.last_download_speed) + 'MBps  ' 
+        sys.stdout.write(message)
+#        time.sleep(.3)  
+#        sys.stdout.flush()
         
-        print('Downloading Complete \n\n')
+        print('\nDownloading Complete \n\n')
         downloader.shutdown() 
  
     def __print_status(self, downloader, print_speed = True):
@@ -152,12 +153,18 @@ class AutoDownloader(object):
             speed = round(speed, 2)              
             total_speed+= speed
             message+= '['+ str(self_all_gids.index(item)) + ']'+ str(percentage_completed) + '% '
-         
-        last_speed = total_speed
-        message += '  Speed: ' + str(total_speed) + 'MBps  ' 
-        sys.stdout.write('\r'+ message)
-        time.sleep(.3)  
-        sys.stdout.flush() 
+        
+        if print_speed == True: 
+            self.last_download_percentages = message
+            self.last_download_speed = total_speed
+            message += '  Speed: ' + str(total_speed) + 'MBps  ' 
+            sys.stdout.write('\r'+ message)
+            time.sleep(.3)  
+            sys.stdout.flush() 
+        else:
+            sys.stdout.write('\r'+ message)
+        
+        
 
     def __add_files_to_aria(self, downloader, project_dir, data_to_download, common_utils_dir):             
         for directory, url_links in data_to_download.items():
