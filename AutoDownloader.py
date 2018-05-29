@@ -66,7 +66,7 @@ class AutoDownloader(object):
         sys.path.insert(0, common_utils_dir + '/__kaggle-api-master__/kaggle/models') 
 
         #sys.path.insert(0, common_utils_dir) 
-        
+        print('\n\n')
         sys.path.insert(0, common_utils_dir)           
         
         
@@ -171,14 +171,15 @@ class AutoDownloader(object):
         
 
     def __add_files_to_aria(self, downloader, project_dir, data_to_download, common_utils_dir):             
+        
         for directory, url_links in data_to_download.items():
             full_path_directory = project_dir + directory
-            
+            print('>>>Creating Directory Structure: \n')
             if os.path.isdir(full_path_directory) and (full_path_directory != common_utils_dir):
                 print('Data previously downloaded at: ' + full_path_directory)
             else:
                 if(full_path_directory != common_utils_dir):
-                    print('>>>Creating directory: '+ full_path_directory )                    
+                    print('Creating directory: '+ full_path_directory )                    
                     os.makedirs(full_path_directory)
                     
                 for url in url_links:
