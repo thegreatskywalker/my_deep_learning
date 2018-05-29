@@ -14,7 +14,9 @@ import shutil
 import requests
 
 
+
 self_all_gids = []
+
 
 
 class AutoDownloader(object):
@@ -29,7 +31,8 @@ class AutoDownloader(object):
         self.download_common_utils(common_utils_dir)        
         from pyaria2 import PyAria2 ###############################################################???
            
-        downloader = PyAria2()  
+        downloader = PyAria2()
+        time.sleep(2)    
 
         self.__add_files_to_aria(downloader, project_dir, data_to_download, common_utils_dir)                
         self.printDownloadStatus(downloader)
@@ -55,6 +58,8 @@ class AutoDownloader(object):
         self.unzip_individual_directory(common_utils_dir)  
         sys.path.insert(0, common_utils_dir + '/kaggle-api-master/kaggle') 
         sys.path.insert(0, common_utils_dir + '/kaggle-api-master/kaggle/api') 
+        sys.path.insert(0, common_utils_dir + '/kaggle-api-master/kaggle/models') 
+
         #sys.path.insert(0, common_utils_dir) 
         
         sys.path.insert(0, common_utils_dir) 
@@ -145,7 +150,7 @@ class AutoDownloader(object):
  
 
 
-    def __add_files_to_aria(self, downloader, project_dir, data_to_download, common_utils_dir):         
+    def __add_files_to_aria(self, downloader, project_dir, data_to_download, common_utils_dir):             
         for directory, url_links in data_to_download.items():
             full_path_directory = project_dir + directory
             
@@ -187,9 +192,11 @@ class AutoDownloader(object):
        else:
            return False
 
+
+
      
      
- 
+
 
 
 

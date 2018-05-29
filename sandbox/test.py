@@ -58,7 +58,6 @@ data_to_download =  {
 
 sys.path.insert(0, project_dir) 
 
-
 from AutoDownloader import AutoDownloader
 AutoDownloader(project_dir, data_to_download)
 
