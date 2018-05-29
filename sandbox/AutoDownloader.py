@@ -114,41 +114,44 @@ class AutoDownloader(object):
             url = temp['uri']    
             print('['+ str(self_all_gids.index(item)) + ']' + url)
         print('\n')
-        while downloader.tellActive():    
-            message = ''
-            total_speed = 0
-            for item in self_all_gids:        
-                status = downloader.tellStatus(item)
-                
-                
-                #if status['status'] == 'active':              
-                completedLength = float(status['completedLength'])
-                totalLength = float(status['totalLength'])
-                
-                if not totalLength == 0:                
-                    percentage_completed = (completedLength / totalLength) * 100
-                    percentage_completed = int(percentage_completed)
-                    #percentage_completed = round(percentage_completed, 0) 
-                else:
-                    message = '?'
-                    percentage_completed = completedLength
-                    percentage_completed = int(percentage_completed)
-
-                    #percentage_completed = completedLength
-                                
-                speed = int(status['downloadSpeed']) /(1024*1024) 
-                speed = round(speed, 2)              
-                total_speed+= speed
-                message+= '['+ str(self_all_gids.index(item)) + ']'+ str(percentage_completed) + '% '
-                 
-            message += '  Speed: ' + str(total_speed) + 'MBps  ' 
-            sys.stdout.write('\r'+ message)
-            time.sleep(.3)  
-            sys.stdout.flush() 
-        print('\n\n')
+        while downloader.tellActive(): 
+            self.__print_status(downloader)
+        self.__print_status(downloader) #Because previous loop will show 98% complete and then terminate at 100%. 
+        
+        print('Downloading Complete \n\n')
         downloader.shutdown() 
  
+    def __print_status(self, downloader):
+        message = ''
+        total_speed = 0
+        for item in self_all_gids:        
+            status = downloader.tellStatus(item)
+            
+            
+            #if status['status'] == 'active':              
+            completedLength = float(status['completedLength'])
+            totalLength = float(status['totalLength'])
+            
+            if not totalLength == 0:                
+                percentage_completed = (completedLength / totalLength) * 100
+                percentage_completed = int(percentage_completed)
+                #percentage_completed = round(percentage_completed, 0) 
+            else:
+                message = '?'
+                percentage_completed = completedLength
+                percentage_completed = int(percentage_completed)
 
+                #percentage_completed = completedLength
+                            
+            speed = int(status['downloadSpeed']) /(1024*1024) 
+            speed = round(speed, 2)              
+            total_speed+= speed
+            message+= '['+ str(self_all_gids.index(item)) + ']'+ str(percentage_completed) + '% '
+             
+        message += '  Speed: ' + str(total_speed) + 'MBps  ' 
+        sys.stdout.write('\r'+ message)
+        time.sleep(.3)  
+        sys.stdout.flush() 
 
     def __add_files_to_aria(self, downloader, project_dir, data_to_download, common_utils_dir):             
         for directory, url_links in data_to_download.items():
