@@ -41,7 +41,11 @@ class AutoDownloader(object):
         print('\n>>>Unzipping') 
         self.unzip_all(project_dir, data_to_download)
         
-        print('\n ############## Downloading Complete ##############')
+        print('\n ############## Downloading Complete ############## \n\n')
+        
+        print('\n ############## Directory Tree ############## \n\n')
+        self.showFolderTree(project_dir, True, 2, False )
+
 
        
     
@@ -57,14 +61,15 @@ class AutoDownloader(object):
         kaggle_api_url = 'https://github.com/thegreatskywalker/kaggle-api/archive/master.zip'
         wget.download(kaggle_api_url , common_utils_dir)
         self.unzip_individual_directory(common_utils_dir)  
-        sys.path.insert(0, common_utils_dir + '/kaggle-api-master/kaggle') 
-        sys.path.insert(0, common_utils_dir + '/kaggle-api-master/kaggle/api') 
-        sys.path.insert(0, common_utils_dir + '/kaggle-api-master/kaggle/models') 
+        os.rename(common_utils_dir + '/kaggle-api-master' , common_utils_dir + '/__kaggle-api-master__')
+        sys.path.insert(0, common_utils_dir + '/__kaggle-api-master__/kaggle') 
+        sys.path.insert(0, common_utils_dir + '/__kaggle-api-master__/kaggle/api') 
+        sys.path.insert(0, common_utils_dir + '/__kaggle-api-master__/kaggle/models') 
 
         #sys.path.insert(0, common_utils_dir) 
         
-        sys.path.insert(0, common_utils_dir) 
-          
+        sys.path.insert(0, common_utils_dir)           
+        
         
         
         ###############################################################
@@ -210,11 +215,46 @@ class AutoDownloader(object):
 
 
 
-     
-     
-
-
-
+    def showFolderTree(self, path,show_files=False,indentation=2,file_output=False):
+        """
+        Shows the content of a folder in a tree structure.
+        path -(string)- path of the root folder we want to show.
+        show_files -(boolean)-  Whether or not we want to see files listed.
+                                Defaults to False.
+        indentation -(int)- Indentation we want to use, defaults to 2.   
+        file_output -(string)-  Path (including the name) of the file where we want
+                                to save the tree.
+        """
+        
+        tree = []
+        
+        if not show_files:        
+            for root, dirs, files in os.walk(path):
+                if not '__' in root:
+                    level = root.replace(path, '').count(os.sep)
+                    indent = ' '*indentation*(level)
+                    tree.append('{}{}/'.format(indent,os.path.basename(root)))
+        
+        if show_files:
+            for root, dirs, files in os.walk(path):
+                if not '__' in root:
+                    level = root.replace(path, '').count(os.sep)
+                    indent = ' '*indentation*(level)
+                    tree.append('{}{}/'.format(indent,os.path.basename(root)))    
+                    for f in files:
+                        subindent=' ' * indentation * (level+1)
+                        tree.append('{}{}'.format(subindent,f))
+        
+        if file_output:
+            output_file = open(file_output,'w')
+            for line in tree:
+                output_file.write(line)
+                output_file.write('\n')
+        else:
+            # Default behaviour: print on screen.
+            for line in tree:
+                print (line)
+                
 
 
 
