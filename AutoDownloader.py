@@ -115,13 +115,13 @@ class AutoDownloader(object):
             print('['+ str(self_all_gids.index(item)) + ']' + url)
         print('\n')
         while downloader.tellActive(): 
-            self.__print_status()
-        self.__print_status() #Because previous loop will show 98% complete and then terminate at 100%. 
+            self.__print_status(downloader)
+        self.__print_status(downloader) #Because previous loop will show 98% complete and then terminate at 100%. 
         
         print('Downloading Complete \n\n')
         downloader.shutdown() 
  
-    def __print_status(self):
+    def __print_status(self, downloader):
         message = ''
         total_speed = 0
         for item in self_all_gids:        
