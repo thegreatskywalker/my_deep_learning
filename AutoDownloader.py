@@ -36,15 +36,17 @@ class AutoDownloader(object):
         time.sleep(2)    
 
         self.__add_files_to_aria(downloader, project_dir, data_to_download, common_utils_dir)                
-        self.printDownloadStatus(downloader)
+        self.printDownloadStatus(downloader)        
 
         print('\n>>>Unzipping') 
         self.unzip_all(project_dir, data_to_download)
         
         
-        print('\n >>> Directory Tree \n\n')
+        print('\n>>>Directory Tree at' + project_dir+ '\n\n')
         self.showFolderTree(project_dir, True, 2, False )
-
+        
+        self_all_gids = []
+        
 
        
     
@@ -171,10 +173,9 @@ class AutoDownloader(object):
         
 
     def __add_files_to_aria(self, downloader, project_dir, data_to_download, common_utils_dir):             
-        
+        print('>>>Creating Directory Structure: \n')
         for directory, url_links in data_to_download.items():
-            full_path_directory = project_dir + directory
-            print('>>>Creating Directory Structure: \n')
+            full_path_directory = project_dir + directory            
             if os.path.isdir(full_path_directory) and (full_path_directory != common_utils_dir):
                 print('Data previously downloaded at: ' + full_path_directory)
             else:
