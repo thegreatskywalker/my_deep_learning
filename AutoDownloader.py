@@ -45,7 +45,7 @@ class AutoDownloader(object):
         print('\n>>>Directory Tree at' + project_dir+ '\n\n')
         self.showFolderTree(project_dir, True, 2, False )
         
-        self_all_gids = []
+        self.self_all_gids = []
         
 
        
@@ -172,7 +172,9 @@ class AutoDownloader(object):
         
         
 
-    def __add_files_to_aria(self, downloader, project_dir, data_to_download, common_utils_dir):             
+    def __add_files_to_aria(self, downloader, project_dir, data_to_download, common_utils_dir):  
+        self.self_all_gids = []
+           
         print('>>>Creating Directory Structure: \n')
         for directory, url_links in data_to_download.items():
             full_path_directory = project_dir + directory            
