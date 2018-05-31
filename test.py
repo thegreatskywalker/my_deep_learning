@@ -9,7 +9,7 @@ Created on Thu May 24 23:06:32 2018
 import wget,sys,os
 
 #    dir_name = os.getcwd()
-project_dir = ('/home/pt/my_deep_learning/')
+project_dir = ('/home/pt/my_deep_learning/Sandbox')
 common_utils_dir = project_dir + '/COMMON_UTILS'
 
 
@@ -57,6 +57,7 @@ data_to_download =  {
 #wget.download(AutoDownloader_url, out = 'AutoDownloader.py')
 
 sys.path.insert(0, project_dir) 
+
 
 from AutoDownloader import AutoDownloader
 AutoDownloader(project_dir, data_to_download)
