@@ -6,10 +6,10 @@ print("3. This will trigger the download of kaggle.json, a file containing your 
 
 print("4. Go to your Google Drive and place the kaggle.json file where your Google Colab notebooks are saved."
 
-#from googleapiclient.discovery import build
-#import io, os
-#from googleapiclient.http import MediaIoBaseDownload
-#from google.colab import auth
+from googleapiclient.discovery import build
+import io, os
+from googleapiclient.http import MediaIoBaseDownload
+from google.colab import auth
 
 auth.authenticate_user()
 
