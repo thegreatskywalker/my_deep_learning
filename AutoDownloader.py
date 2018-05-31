@@ -40,10 +40,8 @@ class AutoDownloader(object):
         self.__printDownloadStatus(downloader)        
 
         print('\n>>>Unzipping') 
-        self.__unzip_all(project_dir, data_to_download)
+        self.__unzip_all(project_dir, data_to_download)        
         
-        
-        print('\n>>>Directory Tree at' + project_dir+ '\n\n')
         self.showDirectory(project_dir)
         
         self.self_all_gids = []
