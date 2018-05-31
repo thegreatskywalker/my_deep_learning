@@ -20,37 +20,38 @@ last_download_speed = 0
 last_download_percentages = ''
 
 
-class AutoDownloader(object):
-    
-    def __init__(self, project_dir, data_to_download, common_utils_dir = 'default' ):     
+class AutoDownloader(object):  
+  
+        
+    def initiate(self, project_dir, data_to_download, common_utils_dir = 'default' ):     
         os.chdir(project_dir)
         print('>>>>>Confirm Project Directory: ' + project_dir)
         
         if common_utils_dir == 'default':
             common_utils_dir = project_dir + '/COMMON_UTILS'
     
-        self.download_common_utils(common_utils_dir)        
+        self.__download_common_utils(common_utils_dir)        
         from pyaria2 import PyAria2 ###############################################################???
            
         downloader = PyAria2()
         time.sleep(2)    
 
         self.__add_files_to_aria(downloader, project_dir, data_to_download, common_utils_dir)                
-        self.printDownloadStatus(downloader)        
+        self.__printDownloadStatus(downloader)        
 
         print('\n>>>Unzipping') 
-        self.unzip_all(project_dir, data_to_download)
+        self.__unzip_all(project_dir, data_to_download)
         
         
         print('\n>>>Directory Tree at' + project_dir+ '\n\n')
-        self.showFolderTree(project_dir, True, 2, False )
+        self.showDirectory(project_dir)
         
         self.self_all_gids = []
         
 
        
     
-    def download_common_utils(self, common_utils_dir):
+    def __download_common_utils(self, common_utils_dir):
         if os.path.isdir(common_utils_dir):
             shutil.rmtree(common_utils_dir)
            
@@ -84,7 +85,7 @@ class AutoDownloader(object):
 
 
    
-    def unzip_all(self, project_dir, data_to_download):
+    def __unzip_all(self, project_dir, data_to_download):
         for directory, url_links in data_to_download.items():        
             full_path_directory = project_dir + directory
             self.unzip_individual_directory(full_path_directory)
@@ -108,7 +109,7 @@ class AutoDownloader(object):
 
 
     ################################################
-    def printDownloadStatus(self, downloader):
+    def __printDownloadStatus(self, downloader):
         
         #Print list of all files to be downloaded
         print('\n\n>>>Downloads Started\n')
@@ -218,7 +219,7 @@ class AutoDownloader(object):
 
 
 
-    def showFolderTree(self, path,show_files=False,indentation=2,file_output=False):
+    def showDirectory(self, path,show_files=True, indentation=2,file_output=False):
         """
         Shows the content of a folder in a tree structure.
         path -(string)- path of the root folder we want to show.
@@ -228,7 +229,7 @@ class AutoDownloader(object):
         file_output -(string)-  Path (including the name) of the file where we want
                                 to save the tree.
         """
-        
+        print('>>>Directory Tree at' + path + '\n\n')
         tree = []
         
         if not show_files:        
@@ -236,19 +237,30 @@ class AutoDownloader(object):
                 if not '__' in root:
                     level = root.replace(path, '').count(os.sep)
                     indent = ' '*indentation*(level)
-                    tree.append('{}{}/'.format(indent,os.path.basename(root)))
+                    #tree.append('{}{}/'.format(indent,os.path.basename(root)))
+                    if file_output:
+                        tree.append('{}{}/'.format(indent,os.path.basename(root)))   
+                    else:
+                        tree.append('{}{}'.format(indent,'['+ os.path.basename(root) + ']'))    
         
         if show_files:
-            for root, dirs, files in os.walk(path):
+            for root, dirs, files in os.walk(path):  
                 if not '__' in root:
                     level = root.replace(path, '').count(os.sep)
                     indent = ' '*indentation*(level)
-                    tree.append('{}{}/'.format(indent,os.path.basename(root)))    
+                    
+                    if file_output:
+                        tree.append('{}{}/'.format(indent,os.path.basename(root)))   
+                    else:
+                        tree.append('{}{}'.format(indent,'['+ os.path.basename(root) + ']'))    
+
                     for f in files:
                         subindent=' ' * indentation * (level+1)
-                        tree.append('{}{}'.format(subindent,f))
+                        tree.append('{}{}'.format(subindent,f))                            
+
         
         if file_output:
+            os.chdir(path)
             output_file = open(file_output,'w')
             for line in tree:
                 output_file.write(line)

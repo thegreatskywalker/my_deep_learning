@@ -60,5 +60,7 @@ sys.path.insert(0, project_dir)
 
 
 from AutoDownloader import AutoDownloader
-AutoDownloader(project_dir, data_to_download)
+auto_dl = AutoDownloader()
+auto_dl.initiate(project_dir, data_to_download)
 
+auto_dl.showDirectory(project_dir,True, 2)
