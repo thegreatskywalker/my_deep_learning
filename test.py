@@ -63,4 +63,4 @@ from AutoDownloader import AutoDownloader
 auto_dl = AutoDownloader()
 auto_dl.initiate(project_dir, data_to_download)
 
-auto_dl.showDirectory(project_dir,True, 2)
+auto_dl.showDirectory(project_dir)
