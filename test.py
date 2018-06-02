@@ -9,7 +9,7 @@ Created on Thu May 24 23:06:32 2018
 import wget,sys,os
 
 #    dir_name = os.getcwd()
-project_dir = ('/home/pt/my_deep_learning/Sandbox')
+project_dir = ('/home/pt/my_deep_learning/')
 common_utils_dir = project_dir + '/COMMON_UTILS'
 
 
@@ -68,7 +68,7 @@ auto_dl.showDirectory(project_dir,True, 2)
 user_key = ""
 token =""
 auto_dl.setup_pushover_credintials(user_key,token)
-auto_dl.send_notification('Test 3')
+auto_dl.send_notification('Test 4')
 
 
 

@@ -290,8 +290,8 @@ class AutoDownloader(object):
             
         url = "https://api.pushover.net/1/messages.json"
         data = {
-            'user'  : pushover_user_key,
-            'token' : pushover_token,
+            'user'  : self.pushover_user_key,
+            'token' : self.pushover_token,
             'sound' : "gamelan"
         }
         data['message'] = msg_string
