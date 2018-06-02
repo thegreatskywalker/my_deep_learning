@@ -12,12 +12,17 @@ import wget
 import time
 import shutil
 import requests
-
+from datetime import datetime
 
 
 self_all_gids = []
 last_download_speed = 0 
 last_download_percentages = ''
+
+### Pushover Login Credentials
+pushover_user_key = ''
+pushover_token = ''
+
 
 
 class AutoDownloader(object):  
@@ -269,7 +274,30 @@ class AutoDownloader(object):
                 print (line)
                 
 
+    def setup_pushover_credintials(self,user_key, token):
+        self.pushover_user_key = user_key
+        self.pushover_token = token
+        
 
+    def send_notification(self,msg_string):
+        
+        ''' 
+            Credit for function: binga Phani Srikanth
+            http://forums.fast.ai/t/training-metrics-as-notifications-on-mobile-using-callbacks/17330
+        
+            This function sends message to my mobile using Pushover.
+        '''     
+            
+        url = "https://api.pushover.net/1/messages.json"
+        data = {
+            'user'  : pushover_user_key,
+            'token' : pushover_token,
+            'sound' : "gamelan"
+        }
+        data['message'] = msg_string
+        #data['message'] = data['message'] + "\n" + str(datetime.now())
+    
+        r = requests.post(url = url, data = data)
 
 
 
