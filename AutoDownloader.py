@@ -29,6 +29,9 @@ class AutoDownloader(object):
   
         
     def initiate(self, project_dir, data_to_download, common_utils_dir = 'default' ):     
+        if not os.path.isdir(project_dir):
+            os.mkdir(project_dir)
+            
         os.chdir(project_dir)
         print('>>>>>Confirm Project Directory: ' + project_dir)
         
@@ -52,8 +55,7 @@ class AutoDownloader(object):
         self.self_all_gids = []
         
 
-       
-    
+
     def __download_common_utils(self, common_utils_dir):
         if os.path.isdir(common_utils_dir):
             shutil.rmtree(common_utils_dir)
@@ -219,7 +221,6 @@ class AutoDownloader(object):
            return True
        else:
            return False
-
 
 
     def showDirectory(self, path,show_files=True, indentation=2,file_output=False):
